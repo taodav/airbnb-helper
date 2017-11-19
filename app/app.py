@@ -53,7 +53,7 @@ def pred():
   payload = {
     "client_id": "3092nxybyb0otqw18e8nh5nty",
     "locale": "en-US",
-    "currency": "CAD",
+    "currency": "USD",
     "_format": "v1_legacy_for_p3",
     "_source": "mobile_p3"
   }
@@ -116,24 +116,23 @@ def pred():
   with open('gbr.pickle', 'rb') as handle:
     gbr = pickle.load(handle)
 
-  with open('encoder.pickle', 'rb') as handle:
-    encoder = pickle.load(handle)
+  # with open('encoder.pickle', 'rb') as handle:
+  #   encoder = pickle.load(handle)
 
-  with open('scaler.pickle', 'rb') as handle:
-    scaler = pickle.load(handle)
+  # with open('scaler.pickle', 'rb') as handle:
+  #   scaler = pickle.load(handle)
 
-  with open('svd.pickle', 'rb') as handle:
-    svd = pickle.load(handle)
+  # with open('svd.pickle', 'rb') as handle:
+  #   svd = pickle.load(handle)
   
-  train_scaled = scaler.transform(df_agg)
-  print(train_scaled)
-  train_encoded = encoder.transform(train_scaled)
-  train_svd = svd.fit_transform(train_encoded)
+  # train_scaled = scaler.transform(df_agg)
+  # train_encoded = encoder.transform(train_scaled)
+  # train_svd = svd.fit_transform(train_encoded)
   
 
   data = {
     "price": abs(gbr.predict(df_gbr)[0]),
-    "type": category_mappings[agg.predict(train_svd)[0]]
+    "type": category_mappings[agg.predict(df_agg)[0]]
   }
   return jsonify(data)
 

@@ -1,44 +1,36 @@
-<!doctype html>
-<!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
-<html>
-  <head>
-    <title>Getting Started Extension's Popup</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <style type="text/css">
-      body {
-        margin: 10px;
-        white-space: nowrap;
-      }
+<html><head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="popup.js"></script>
 
-      h1 {
-        font-size: 15px;
-      }
+  <style>
+    .title{
+      color: #e74c3c;
+    }
+    .text{
+      font-size: 15px;
+    }
+    #price-estimate{
+      font-weight: bold;
+    }
+    #type-estimate{
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body style="width: 400px;">
+  <div class="title">
+    <h3>The Price Isn't Right</h3>
+  </div>
 
-      #container {
-        align-items: center;
-        display: flex;
-        justify-content: space-between;
-      }
-    </style>
+  <div id="est-value" class="text">
+    <p>Our Estimated Value for this lisiting: <span id="price-estimate"></span></p>
+  </div>
+  <div id="lising-group" class="text">
+    <p>Lising type: <span id="type-estimate"></span></p>
+  </div>
+  <div id="deletedialog"></div>
+  <div id="adddialog"></div>
 
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
-    -->
-  </head>
 
-  <body>
-    <h1>Background Color Changer</h1>
-    <div id="container">
-      <h3>The Price You Should be Paying..... Bruh</h3>
-    </div>
-
-    <script src="js/popup.js"></script>
-  </body>
+</body>
 </html>

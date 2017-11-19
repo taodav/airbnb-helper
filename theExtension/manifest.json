@@ -1,17 +1,17 @@
 {
-    "manifest_version": 2,
-  
-    "name": "AirBnbro 2.0",
-    "description": "This extensions gives you an estimate price for your listing and tells you what kind of people it will attract",
-    "version": "1.0",
-  
-    "browser_action": {
+  "name": "My Bookmarks",
+  "version": "1.1",
+  "description": "A browser action with a popup dump of all bookmarks, including search, add, edit and delete.",
+  "permissions": [
+    "bookmarks",
+    "tabs",
+    "https://8c3a54cd.ngrok.io/*"
+  ],
+  "browser_action": {
+      "default_title": "My Bookmarks",
       "default_icon": "icon.png",
       "default_popup": "popup.html"
-    },
-    "permissions": [
-      "activeTab",
-      "storage",
-      "<all_urls>"
-    ]
-  }
+  },
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
+}
