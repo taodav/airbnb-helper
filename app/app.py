@@ -5,6 +5,10 @@ import pandas as pd
 import numpy as np
 import sklearn as sk
 from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.cluster import KMeans, AgglomerativeClustering
+from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
+from sklearn.decomposition import TruncatedSVD
+from sklearn.svm import LinearSVC
 from sklearn.svm import LinearSVC
 import pickle
 import json
@@ -95,12 +99,43 @@ def pred():
     "has_weekly_price": bool(res["weekly_price_native"]),
     "event_suitable": event_suitable
   }
-  # with open('../agg.pickle', 'rb') as handle:
-  #   agg = pickle.load(handle)
-  # with open('../gbr.pickle', 'rb') as handle:
-  #   gbr = pickle.load(handle)
+  category_mappings = {
+      2: "modern",
+      1: "luxury",
+      4: "tourist",
+      0: "homey",
+      3: "quiet"
+  }
+
+  df_gbr = pd.DataFrame(gbr_input, index=[0])
+  df_agg = pd.DataFrame(agg_input, index=[0])
+
+  with open('agg.pickle', 'rb') as handle:
+    agg = pickle.load(handle)
+
+  with open('gbr.pickle', 'rb') as handle:
+    gbr = pickle.load(handle)
+
+  with open('encoder.pickle', 'rb') as handle:
+    encoder = pickle.load(handle)
+
+  with open('scaler.pickle', 'rb') as handle:
+    scaler = pickle.load(handle)
+
+  with open('svd.pickle', 'rb') as handle:
+    svd = pickle.load(handle)
   
-  return jsonify(agg_input)
+  train_scaled = scaler.transform(df_agg)
+  print(train_scaled)
+  train_encoded = encoder.transform(train_scaled)
+  train_svd = svd.fit_transform(train_encoded)
+  
+
+  data = {
+    "price": abs(gbr.predict(df_gbr)[0]),
+    "type": category_mappings[agg.predict(train_svd)[0]]
+  }
+  return jsonify(data)
 
 @app.route('/')
 def hello_world():
